@@ -1,0 +1,13 @@
+one:
+  first_name: Michael
+  last_name: Cain
+  email: cainTrain@gmail.com
+  friend_count: 731
+  tags: ['frontend', 'backend', 'fullstack']
+
+two:
+  first_name: Bob
+  last_name: leBuilder
+  email: iCanFixIt@hotmail.com
+  friend_count: 1
+  tags: ['builder']

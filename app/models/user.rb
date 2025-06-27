@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  validate :first_name, presence: true
-  validate :last_name, presence: true
-  
-  serialize :tags, Array
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
+  serialize :tags, coder: YAML
 end
