@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.3.3"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.5", ">= 7.1.5.1"
+gem "rails", "~> 7.1"
 
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 1.4"
@@ -13,13 +13,12 @@ gem "puma", ">= 5.0"
 
 # Architectural and runtime dependencies aligned with the interview plan stack
 gem "classy_hash"
-gem "fx"
+gem "fx", require: false
 gem "oj"
 gem "pundit"
-gem "rails_event_store"
-gem "scenic"
+gem "scenic", require: false
 gem "sidekiq"
-
+gem "rails_event_store", "~> 2.18.0"
 gem "packs"
 gem "packs-rails"
 gem "packs-specification"
@@ -58,6 +57,7 @@ group :development, :test do
   gem "database_cleaner-active_record"
   gem "factory_bot_rails"
   gem "rspec-rails"
+  gem "ruby_event_store-rspec"
 end
 
 group :development do
@@ -68,3 +68,4 @@ group :development do
   gem "bullet"
 end
 
+gem "rails_event_store", "~> 2.18.0"
