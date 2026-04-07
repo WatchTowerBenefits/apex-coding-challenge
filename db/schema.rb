@@ -10,24 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_02_102448) do
-  create_table "companies", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.integer "employee_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "customers", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "email"
-    t.integer "login_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+ActiveRecord::Schema[7.2].define(version: 2026_04_07_192338) do
   create_table "event_store_events", force: :cascade do |t|
     t.string "event_id", limit: 36, null: false
     t.string "event_type", null: false
@@ -66,6 +49,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_02_102448) do
     t.integer "count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "price"
+    t.string "image_url"
   end
 
   create_table "users", force: :cascade do |t|
