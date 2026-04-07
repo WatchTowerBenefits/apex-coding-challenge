@@ -12,10 +12,10 @@ We are looking for
 
 ## Requirements
 1. **MVC Architecture**: Implement the Model-View-Controller architecture for managing products, carts, and orders.
-   2. All public responses should be DTOs (Data Transfer Objects) that are serialized to JSON
-   3. Polices for POST/PUT/DELETE endpoints should be implemented using a policy management system (e.g., Pundit).
-4. **Event Publication and Subscription**: Implement an event-driven architecture where key actions (e.g., product added to cart, order placed) publish events that can be subscribed to by other parts of the system.
-2. **Notifications**: Implement a simple notification system that sends an email to the user when an order is placed (via an event subscription).
+   - All public responses should be DTOs (Data Transfer Objects) that are serialized to JSON
+   - Policies for POST/PUT/DELETE endpoints should be implemented using a policy management system (e.g., Pundit).
+2. **Event Publication and Subscription**: Implement an event-driven architecture where key actions (e.g., product added to cart, order placed) publish events that can be subscribed to by other parts of the system.
+3. **Notifications**: Implement a simple notification system that sends an email to the user when an order is placed (via an event subscription).
 
 
 ## Appendix
