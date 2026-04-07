@@ -92,6 +92,23 @@ When a user clicks "Add to Cart", the app currently makes the API call silently.
 - On a **successful** add, display a PrimeVue `Toast` notification that reads: `"[Product Name] successfully added to cart"`
 - The toast should be non-blocking and dismiss on its own
 
+### 4. BONUS — Unit Tests
+
+If you have time, add unit test coverage using **Vitest** (already installed and configured).
+
+**Requirements:**
+
+- Write at least one component test — your choice of which component, but it should assert something meaningful about rendered output or user interaction
+- Write tests for the Pinia cart store — cover the following:
+  - `itemCount` is `0` when the cart has no items
+  - `setCart()` updates the cart state and `itemCount` reflects the new item count
+
+- Run your tests with:
+
+```bash
+npm run test
+```
+
 ---
 
 ## Notes
