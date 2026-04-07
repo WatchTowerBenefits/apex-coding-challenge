@@ -41,13 +41,6 @@ npm install
 npm run dev
 ```
 
-The frontend dev server will start on `http://localhost:5173` and proxy API requests to the Rails backend automatically.
-
-> **Shortcut:** If you have [foreman](https://github.com/ddollar/foreman) installed (`gem install foreman`), you can run both servers at once from the root directory with:
-> ```bash
-> foreman start -f Procfile.dev
-> ```
-
 ## The App
 
 The app currently has two pages:
@@ -67,10 +60,9 @@ The product list currently renders in a table. We'd like to give users the optio
 
 - Add a toggle button to the top-right of the Products page that switches between the two views
 - **Table view** should behave exactly as it does today
-- **Card view** should display each product as a card, including the product name, type, stock count, and an "Add to Cart" button
-- Each view should be implemented as its own component (`ProductsTable.vue` and `ProductsCards.vue`), and `ProductList.vue` should compose them
+- **Card view** should display each product as a card, including the produc image, name, type, price, stock count, and an "Add to Cart" button
 - Use PrimeVue components where appropriate
-- The selected view should be **persisted** so that navigating away and back does not reset it
+- The selected view should be **persisted** so that refreshing the page does not reset it
 
 ### 2. Add to Cart Feedback
 
