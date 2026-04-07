@@ -1,6 +1,5 @@
 <script setup>
 import Menubar from 'primevue/menubar'
-import Badge from 'primevue/badge'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

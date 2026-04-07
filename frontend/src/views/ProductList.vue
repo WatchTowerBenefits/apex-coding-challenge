@@ -19,18 +19,6 @@ onMounted(async () => {
   }
 })
 
-async function addToCart(product) {
-  try {
-    await fetch('/api/cart/items', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ product_id: product.id, quantity: 1 }),
-    })
-  } catch (e) {
-    console.error('Failed to add to cart:', e)
-  }
-}
-
 function formatPrice(price) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price)
 }
@@ -64,7 +52,6 @@ function formatPrice(price) {
           label="Add to Cart"
           size="small"
           :disabled="data.count === 0"
-          @click="addToCart(data)"
         />
       </template>
     </Column>

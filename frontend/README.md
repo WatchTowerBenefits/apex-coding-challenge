@@ -46,7 +46,7 @@ npm run dev
 The app currently has two pages:
 
 - **Products** (`/`) — displays a list of products in a table
-- **Cart** (`/cart`) — displays the current cart and a button to place an order
+- **Cart** (`/cart`) — currently empty
 
 ---
 
@@ -60,11 +60,30 @@ The product list currently renders in a table. We'd like to give users the optio
 
 - Add a toggle button to the top-right of the Products page that switches between the two views
 - **Table view** should behave exactly as it does today
-- **Card view** should display each product as a card, including the produc image, name, type, price, stock count, and an "Add to Cart" button
+- **Card view** should display each product as a card, including the product image, name, type, price, stock count, and an "Add to Cart" button
 - Use PrimeVue components where appropriate
 - The selected view should be **persisted** so that refreshing the page does not reset it
 
-### 2. Add to Cart Feedback
+### 2. Number of Items in Cart Badge
+
+The Cart button in the navbar should display a badge counter showing the number of items currently in the cart.
+
+**Requirements:**
+
+- Create a Pinia store to hold the cart state
+- On initial page load, fetch the current cart from `GET /api/cart` and store the result in the Pinia store
+- When a user adds an item via the "Add to Cart" button, an API call to `POST /api/cart/items` should fire, the response updated in the store and the number in the badge counter should change to reflect the new number of cart items
+
+**API reference:**
+
+| Method | Endpoint | Body | Response |
+|--------|----------|------|----------|
+| `GET` | `/api/cart` | — | `{ id, items: [{ id, product_id, product_name, quantity, price, image_url }] }` |
+| `POST` | `/api/cart/items` | `{ product_id, quantity }` | Same shape as `GET /api/cart` |
+
+> Use **Axios** for all API calls in this task (it is already installed).
+
+### 3. Add to Cart Feedback
 
 When a user clicks "Add to Cart", the app currently makes the API call silently. We'd like to give users feedback.
 
