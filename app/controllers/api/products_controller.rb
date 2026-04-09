@@ -1,7 +1,5 @@
 module Api
   class ProductsController < ApplicationController
-    def index
-      render json: Product.all
-    end
+    def index; end
   end
 end

@@ -68,4 +68,3 @@ group :development do
   gem "bullet"
 end
 
-gem "rails_event_store", "~> 2.18.0"
