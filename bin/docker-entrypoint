@@ -1,7 +1,22 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
+# Generate a self-signed SSL certificate if none was mounted
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+  if [ -z "${SSL_CERT_PATH}" ] || [ -z "${SSL_KEY_PATH}" ]; then
+    export SSL_CERT_PATH="/rails/config/certs/self-signed.crt"
+    export SSL_KEY_PATH="/rails/config/certs/self-signed.key"
+
+    if [ ! -f "${SSL_CERT_PATH}" ] || [ ! -f "${SSL_KEY_PATH}" ]; then
+      echo "Generating self-signed SSL certificate..."
+      openssl req -x509 -newkey rsa:2048 -nodes \
+        -keyout "${SSL_KEY_PATH}" \
+        -out "${SSL_CERT_PATH}" \
+        -days 365 \
+        -subj "/CN=localhost"
+    fi
+  fi
+
+  # Create or migrate existing database
   ./bin/rails db:prepare
 fi
 
