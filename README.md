@@ -54,6 +54,14 @@ The API will be available at:
 http://localhost:3000
 ```
 
+## Docker instructions
+Alternatively, you can run the backend using Docker:
+
+```bash
+docker build -t threeflow-interview-stack .
+docker run -p 3000:3000 -e SECRET_KEY_BASE=$(bin/rails secret) hreeflow-interview-stack
+````
+
 ## The App
 
 This backend powers a simple e-commerce application with the following core domain concepts:
