@@ -10,7 +10,7 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const res = await fetch('/api/products')
+    const res = await fetch('http://localhost:3000/api/products')
     products.value = await res.json()
   } catch (e) {
     console.error('Failed to fetch products:', e)
