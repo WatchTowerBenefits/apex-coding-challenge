@@ -6,7 +6,7 @@ This project is designed to assess your skills in full-stack development, API de
 
 ## To AI or not to AI?
 
-**Please complete this project manually as much as possible.** If you get stuck and need to look something up on Google or ask an AI a quick clarifying question, that's okay — just do it visibly (e.g., share your screen or note it) so we can follow along and assess your thought process. However, please do not use AI to solve entire features or portions of the project on your behalf.
+**Please complete this project manually as much as possible.** If you get stuck and need to look something up on Google or ask an AI a quick clarifying question, that's okay — just do it visibly (e.g., share your screen) so we can follow along and assess your thought process. However, please do not use AI to solve entire features or portions of the project on your behalf.
 
 ## Tech Stack
 
