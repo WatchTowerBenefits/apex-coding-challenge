@@ -25,17 +25,7 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": [
-        "shopify.ruby-lsp",
-        "Vue.volar",
-        "esbenp.prettier-vscode"
-      ],
-      "settings": {
-        "editor.formatOnSave": true,
-        "[ruby]": {
-          "editor.defaultFormatter": "Shopify.ruby-lsp"
-        }
-      }
+      "extensions": ["Vue.volar", "esbenp.prettier-vscode"]
     }
   }
 }
