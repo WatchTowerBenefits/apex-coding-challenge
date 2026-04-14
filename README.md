@@ -59,7 +59,7 @@ Alternatively, you can run the backend using Docker:
 
 ```bash
 docker build -t threeflow-interview-stack .
-docker run -p 3000:3000 -e SECRET_KEY_BASE=$(bin/rails secret) hreeflow-interview-stack
+docker run -p 3000:3000 -e SECRET_KEY_BASE=$(bin/rails secret) threeflow-interview-stack
 ````
 
 ## The App
