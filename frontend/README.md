@@ -14,12 +14,31 @@ This project is designed to assess your skills in front-end development, compone
 
 ## Getting Started
 
-### Prerequisites
+### Using GitHub Codespaces (recommended)
 
+Click the green **Code** button on the repository page → **Codespaces** tab → **Create codespace**. Ruby, Node.js, and all dependencies are pre-installed automatically — no local setup needed.
+
+Once the Codespace is ready, start the servers in two separate terminals:
+
+```bash
+# Terminal 1 — Rails backend
+bin/rails s
+```
+
+```bash
+# Terminal 2 — Vue frontend
+cd frontend && npm run dev
+```
+
+Ports 3000 and 5173 will be forwarded automatically and open in your browser.
+
+### Running locally
+
+**Prerequisites:**
 - Ruby 3.3.3 (we recommend [rbenv](https://github.com/rbenv/rbenv) to manage Ruby versions)
 - Node.js + npm
 
-### 1. Start the Rails backend
+**1. Start the Rails backend**
 
 From the **root** of the repository:
 
@@ -32,7 +51,7 @@ bin/rails s
 
 This starts the Rails API on `http://localhost:3000`. The seed step populates the database with sample products.
 
-### 2. Start the Vue frontend
+**2. Start the Vue frontend**
 
 In a separate terminal, from the `frontend/` directory:
 
