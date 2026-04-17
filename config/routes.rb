@@ -8,5 +8,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :products, only: [:index]
+    resource :cart, only: [:show] do
+      post 'items', to: 'carts#add_item'
+    end
   end
 end

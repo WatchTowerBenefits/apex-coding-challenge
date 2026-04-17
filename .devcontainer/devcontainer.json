@@ -9,18 +9,23 @@
       "version": "20"
     }
   },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libsqlite3-dev && bundle install && bin/rails db:setup && bin/rails db:seed && cd frontend && npm install",
+  "onCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends libsqlite3-dev libvips shared-mime-info libyaml-dev redis-server",
+  "postCreateCommand": "bundle install && cd frontend && npm install && cd .. && bin/rails db:setup",
+  "postStartCommand": "sudo service redis-server start || true",
   "forwardPorts": [3000, 5173],
   "portsAttributes": {
-    "3000": { "label": "Rails API" },
-    "5173": { "label": "Vue Dev Server" }
+    "3000": {
+      "label": "Rails API",
+      "onAutoForward": "notify"
+    },
+    "5173": {
+      "label": "Vue Dev Server",
+      "onAutoForward": "openBrowser"
+    }
   },
   "customizations": {
     "vscode": {
-      "extensions": [
-        "shopify.ruby-lsp",
-        "Vue.volar"
-      ]
+      "extensions": ["Vue.volar", "esbenp.prettier-vscode"]
     }
   }
 }
