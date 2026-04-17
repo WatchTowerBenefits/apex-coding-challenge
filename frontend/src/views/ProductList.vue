@@ -1,12 +1,30 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import Button from 'primevue/button'
-import Tag from 'primevue/tag'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
+import { useToast } from 'primevue/usetoast'
+import SelectButton from 'primevue/selectbutton'
+import ProductsTable from '../components/ProductsTable.vue'
+import ProductsCards from '../components/ProductsCards.vue'
+import { useCartStore } from '../stores/cart'
+
+const route = useRoute()
+const router = useRouter()
+const toast = useToast()
+const cartStore = useCartStore()
 
 const products = ref([])
 const loading = ref(true)
+
+const viewOptions = [
+  { icon: 'pi pi-table', value: 'table' },
+  { icon: 'pi pi-th-large', value: 'cards' },
+]
+
+const viewMode = computed({
+  get: () => (route.query.view === 'cards' ? 'cards' : 'table'),
+  set: (val) => router.replace({ query: { ...route.query, view: val } }),
+})
 
 onMounted(async () => {
   try {
@@ -19,54 +37,54 @@ onMounted(async () => {
   }
 })
 
-function formatPrice(price) {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price)
+async function addToCart(product) {
+  try {
+    const { data } = await axios.post('/api/cart/items', {
+      product_id: product.id,
+      quantity: 1,
+    })
+    cartStore.setCart(data)
+    toast.add({
+      severity: 'success',
+      summary: 'Added to Cart',
+      detail: `${product.product_name} successfully added to cart`,
+      life: 3000,
+    })
+  } catch (e) {
+    console.error('Failed to add to cart:', e)
+  }
 }
 </script>
 
 <template>
-  <h1>Products</h1>
+  <div class="page-header">
+    <h1>Products</h1>
+    <SelectButton v-model="viewMode" :options="viewOptions" optionValue="value">
+      <template #option="{ option }">
+        <i :class="option.icon" />
+      </template>
+    </SelectButton>
+  </div>
 
-  <DataTable :value="products" :loading="loading" stripedRows tableStyle="min-width: 50rem">
-    <Column header="Image">
-      <template #body="{ data }">
-        <img :src="data.image_url" :alt="data.product_name" class="product-image" />
-      </template>
-    </Column>
-    <Column field="product_name" header="Name" sortable />
-    <Column field="product_type" header="Type" sortable>
-      <template #body="{ data }">
-        <Tag :value="data.product_type" />
-      </template>
-    </Column>
-    <Column field="price" header="Price" sortable>
-      <template #body="{ data }">
-        {{ formatPrice(data.price) }}
-      </template>
-    </Column>
-    <Column field="count" header="In Stock" sortable />
-    <Column header="">
-      <template #body="{ data }">
-        <Button
-          icon="pi pi-cart-plus"
-          label="Add to Cart"
-          size="small"
-          :disabled="data.count === 0"
-        />
-      </template>
-    </Column>
-  </DataTable>
+  <ProductsTable
+    v-if="viewMode === 'table'"
+    :products="products"
+    :loading="loading"
+    @add-to-cart="addToCart"
+  />
+  <ProductsCards
+    v-else
+    :products="products"
+    :loading="loading"
+    @add-to-cart="addToCart"
+  />
 </template>
 
 <style scoped>
-h1 {
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 1.5rem;
-}
-
-.product-image {
-  width: 80px;
-  height: 54px;
-  object-fit: cover;
-  border-radius: 4px;
 }
 </style>
