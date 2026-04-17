@@ -1,0 +1,28 @@
+services:
+  rails:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    command: >
+      bash -c "bundle install &&
+               bin/rails db:prepare &&
+               bin/rails server"
+
+  frontend:
+    image: node:20-slim
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev -- --host"
+    depends_on:
+      - rails
+
+volumes:
+  bundle_cache:

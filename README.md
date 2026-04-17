@@ -1,15 +1,16 @@
-Here’s a rewritten backend README in the same level of specificity as the front-end one, while keeping the backend goals aligned with the project brief.
+# ThreeFlow Full-Stack Engineer Interview Project
 
-***
+Welcome to the ThreeFlow Full-Stack Engineer Interview Project!
 
-# Threeflow Backend Engineer Interview Project
+This project is designed to assess your skills in full-stack development, API design, component architecture, and problem-solving. You'll be working on a small e-commerce application that allows users to browse products, manage a cart, and place orders.
 
-Welcome to the Threeflow Backend Engineer Interview Project!
+## To AI or not to AI?
 
-This project is designed to assess your skills in backend development, API design, system architecture, and problem-solving. You’ll be working on the backend for a small e-commerce application that allows users to browse products, manage a cart, and place orders.
+**Please complete this project manually as much as possible.** If you get stuck and need to look something up on Google or ask an AI a quick clarifying question, that's okay — just do it visibly (e.g., share your screen) so we can follow along and assess your thought process. However, please do not use AI to solve entire features or portions of the project on your behalf.
 
 ## Tech Stack
 
+### Backend
 - Ruby 3.3.3
 - Rails API
 - SQLite3
@@ -17,54 +18,36 @@ This project is designed to assess your skills in backend development, API desig
 - Rails Event Store for event publication/subscription
 - Action Mailer for notifications
 
+### Frontend
+- Vue 3 (Composition API, `<script setup>`)
+- Vue Router
+- Pinia (state management)
+- PrimeVue 4 (component library)
+- Vite
+
 ## Getting Started
 
 ### Prerequisites
 
-- Ruby 3.3.3
-- Bundler
-- SQLite3
+- [Docker](https://www.docker.com/products/docker-desktop/)
 
-### 1. Install dependencies
-
-From the root of the repository:
+### Run the app
 
 ```bash
-bundle install
+./run.sh
 ```
 
-### 2. Set up the database
+This builds and starts both the Rails API (port 3000) and the Vue frontend dev server (port 5173) using Docker Compose.
 
-Run the migrations and seed
+To stop the services:
 
 ```bash
-bin/rails db:migrate
-bin/rails db:seed
+docker compose down
 ```
-
-### 3. Start the Rails API
-
-```bash
-bin/rails s
-```
-
-The API will be available at:
-
-```bash
-http://localhost:3000
-```
-
-## Docker instructions
-Alternatively, you can run the backend using Docker:
-
-```bash
-docker build -t threeflow-interview-stack .
-docker run -p 3000:3000 -e SECRET_KEY_BASE=$(bin/rails secret) hreeflow-interview-stack
-````
 
 ## The App
 
-This backend powers a simple e-commerce application with the following core domain concepts:
+This is a simple e-commerce application with the following core domain concepts:
 
 - Products
 - Cart
@@ -72,9 +55,14 @@ This backend powers a simple e-commerce application with the following core doma
 - Orders
 - Users and permissions
 
-The frontend expects the API to support browsing products, adding items to a cart, and placing orders.
+The app currently has two pages:
 
-## Your Tasks
+- **Products** (`/`) — displays a list of products in a table
+- **Cart** (`/cart`) — currently empty
+
+---
+
+## Backend Tasks
 
 ### 1. Implement MVC Architecture
 
@@ -132,6 +120,84 @@ Implement a simple notification flow when an order is placed.
 - Trigger the email through an event subscription rather than directly inside the controller.
 - Keep the notification logic simple and easy to extend.
 
+---
+
+## Frontend Tasks
+
+### 1. Product List View Toggle
+
+The product list currently renders in a table. We'd like to give users the option to switch between a **table view** and a **card view**.
+
+**Requirements:**
+
+- Add a toggle button to the top-right of the Products page that switches between the two views
+- **Table view** should behave exactly as it does today
+- **Card view** should display each product as a card, including the product image, name, type, price, stock count, and an "Add to Cart" button
+- Use PrimeVue components where appropriate
+- The selected view should be **persisted** so that refreshing the page does not reset it
+
+### 2. Number of Items in Cart Badge
+
+The Cart button in the navbar should display a badge counter showing the number of items currently in the cart.
+
+**Requirements:**
+
+- Create a Pinia store to hold the cart state
+- On initial page load, fetch the current cart from `GET /api/cart` and store the result in the Pinia store
+- When a user adds an item via the "Add to Cart" button, an API call to `POST /api/cart/items` should fire, the response updated in the store and the number in the badge counter should change to reflect the new number of cart items
+
+**API reference:**
+
+| Method | Endpoint | Body | Response |
+|--------|----------|------|----------|
+| `GET` | `/api/cart` | — | `{ id, items: [{ id, product_id, product_name, quantity, price, image_url }] }` |
+| `POST` | `/api/cart/items` | `{ product_id, quantity }` | Same shape as `GET /api/cart` |
+
+> Use **Axios** for all API calls in this task (it is already installed).
+
+### 3. Add to Cart Feedback
+
+When a user clicks "Add to Cart", the app currently makes the API call silently. We'd like to give users feedback.
+
+**Requirements:**
+
+- On a **successful** add, display a PrimeVue `Toast` notification that reads: `"[Product Name] successfully added to cart"`
+- The toast should be non-blocking and dismiss on its own
+
+---
+
+## Bonus — Unit Tests
+
+If you have time, add test coverage for both the backend and frontend.
+
+### Backend
+
+Write tests for:
+
+- API responses for products, cart, and orders
+- Authorization behavior for protected endpoints
+- Event publication when items are added to cart or orders are placed
+- Email notification delivery when an order is created
+
+Use whichever test framework is already configured in the project.
+
+### Frontend
+
+Use **Vitest** (already installed and configured).
+
+- Write at least one component test — your choice of which component, but it should assert something meaningful about rendered output or user interaction
+- Write tests for the Pinia cart store — cover the following:
+  - `itemCount` is `0` when the cart has no items
+  - `setCart()` updates the cart state and `itemCount` reflects the new item count
+
+Run frontend tests with:
+
+```bash
+npm run test
+```
+
+---
+
 ## API Expectations
 
 The frontend will expect JSON responses that are structured and consistent. For example:
@@ -167,35 +233,18 @@ The frontend will expect JSON responses that are structured and consistent. For 
 
 The response should use the same shape as `GET /api/cart`.
 
-## Bonus — Unit Tests
-
-If you have time, add test coverage for the backend.
-
-### Requirements
-
-Write tests for:
-
-- API responses for products, cart, and orders
-- authorization behavior for protected endpoints
-- event publication when items are added to cart or orders are placed
-- email notification delivery when an order is created
-
-Use whichever test framework is already configured in the project.
-
 ## Notes
 
 - Keep the code clean, readable, and well-organized.
 - Prefer service objects or dedicated event handlers where they improve clarity.
 - Use DTOs or serializers for all externally visible responses.
 - Make sure authorization and event handling are not tightly coupled to controller actions.
-- We’re looking for good judgment about where domain logic should live and how the backend pieces fit together.
+- All frontend code should be written in **Vue 3 Composition API** (`<script setup>`).
+- Use **PrimeVue** components wherever it makes sense — avoid custom styling where a PrimeVue component already covers the use case.
+- We're looking for good judgment about where domain logic should live and how the pieces fit together.
 
 ## Appendix
 
 - [Rails Event Store](https://railseventstore.org/docs/core-concepts/pubsub) — guide to publishing and subscribing to events in Rails.
 - [Pundit](https://github.com/varvet/pundit) — Ruby gem for authorization and policy management.
 - [Action Mailer](https://guides.rubyonrails.org/action_mailer_basics.html) — Rails guide for sending email notifications.
-
-If you want, I can also turn this into a polished final README with consistent Markdown formatting and wording that matches the front-end README style even more closely.
-
-Sources
