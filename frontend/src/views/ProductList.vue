@@ -28,8 +28,8 @@ const viewMode = computed({
 
 onMounted(async () => {
   try {
-    const { data } = await axios.get('/api/products')
-    products.value = data
+    const res = await fetch('http://localhost:3000/api/products')
+    products.value = await res.json()
   } catch (e) {
     console.error('Failed to fetch products:', e)
   } finally {
