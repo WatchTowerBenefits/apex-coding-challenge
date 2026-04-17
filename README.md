@@ -109,18 +109,7 @@ When a user clicks "Add to Cart", the app currently makes the API call silently.
 
 ## Bonus — Unit Tests
 
-If you have time, add test coverage for both the backend and frontend.
-
-### Backend
-
-Write tests for:
-
-- API responses for products, cart, and orders
-- Authorization behavior for protected endpoints
-- Event publication when items are added to cart or orders are placed
-- Email notification delivery when an order is created
-
-Use whichever test framework is already configured in the project.
+If you have time, add test coverage for both the frontend.
 
 ### Frontend
 
@@ -136,56 +125,3 @@ Run frontend tests with:
 ```bash
 npm run test
 ```
-
----
-
-## API Expectations
-
-The frontend will expect JSON responses that are structured and consistent. For example:
-
-### Cart response
-
-```json
-{
-  "id": 1,
-  "items": [
-    {
-      "id": 10,
-      "product_id": 5,
-      "product_name": "Sample Product",
-      "quantity": 2,
-      "price": 19.99,
-      "image_url": "https://example.com/image.png"
-    }
-  ]
-}
-```
-
-### Add to cart request
-
-```json
-{
-  "product_id": 5,
-  "quantity": 1
-}
-```
-
-### Add to cart response
-
-The response should use the same shape as `GET /api/cart`.
-
-## Notes
-
-- Keep the code clean, readable, and well-organized.
-- Prefer service objects or dedicated event handlers where they improve clarity.
-- Use DTOs or serializers for all externally visible responses.
-- Make sure authorization and event handling are not tightly coupled to controller actions.
-- All frontend code should be written in **Vue 3 Composition API** (`<script setup>`).
-- Use **PrimeVue** components wherever it makes sense — avoid custom styling where a PrimeVue component already covers the use case.
-- We're looking for good judgment about where domain logic should live and how the pieces fit together.
-
-## Appendix
-
-- [Rails Event Store](https://railseventstore.org/docs/core-concepts/pubsub) — guide to publishing and subscribing to events in Rails.
-- [Pundit](https://github.com/varvet/pundit) — Ruby gem for authorization and policy management.
-- [Action Mailer](https://guides.rubyonrails.org/action_mailer_basics.html) — Rails guide for sending email notifications.
