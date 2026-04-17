@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import api from '../api'
 
 export const useCartStore = defineStore('cart', () => {
   const cart = ref({ items: [] })
@@ -8,7 +8,7 @@ export const useCartStore = defineStore('cart', () => {
   const itemCount = computed(() => cart.value.items?.length ?? 0)
 
   async function fetchCart() {
-    const { data } = await axios.get('/api/cart')
+    const { data } = await api.get('/api/cart')
     cart.value = data
   }
 

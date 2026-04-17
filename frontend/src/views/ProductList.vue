@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
+import api from '../api'
 import { useToast } from 'primevue/usetoast'
 import SelectButton from 'primevue/selectbutton'
 import ProductsTable from '../components/ProductsTable.vue'
@@ -28,8 +28,8 @@ const viewMode = computed({
 
 onMounted(async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/products')
-    products.value = await res.json()
+    const { data } = await api.get('/api/products')
+    products.value = data
   } catch (e) {
     console.error('Failed to fetch products:', e)
   } finally {
@@ -39,7 +39,7 @@ onMounted(async () => {
 
 async function addToCart(product) {
   try {
-    const { data } = await axios.post('/api/cart/items', {
+    const { data } = await api.post('/api/cart/items', {
       product_id: product.id,
       quantity: 1,
     })
