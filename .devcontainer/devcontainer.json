@@ -9,7 +9,9 @@
       "version": "20"
     }
   },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libsqlite3-dev && bundle install && bin/rails db:setup && bin/rails db:seed && cd frontend && npm install",
+  "onCreateCommand": "sudo apt-get update && sudo apt-get install -y libsqlite3-dev && bundle install && cd frontend && npm install",
+  "postCreateCommand": "bin/rails db:setup",
+  "postStartCommand": "bin/rails db:migrate",
   "forwardPorts": [3000, 5173],
   "portsAttributes": {
     "3000": { "label": "Rails API" },

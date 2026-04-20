@@ -10,20 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_02_102448) do
-  create_table "companies", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.integer "employee_count"
+ActiveRecord::Schema[7.2].define(version: 2026_04_09_134957) do
+  create_table "cart_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "product_id", null: false
+    t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
 
-  create_table "customers", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "email"
-    t.integer "login_count"
+  create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -52,31 +50,24 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_02_102448) do
     t.index ["stream", "position"], name: "index_event_store_events_in_streams_on_stream_and_position", unique: true
   end
 
-  create_table "gamers", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.integer "age"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "products", force: :cascade do |t|
     t.string "product_name"
     t.string "product_type"
     t.integer "count"
+    t.decimal "price"
+    t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
     t.string "email"
-    t.integer "friend_count"
-    t.text "tags"
+    t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "products"
   add_foreign_key "event_store_events_in_streams", "event_store_events", column: "event_id", primary_key: "event_id"
 end

@@ -10,7 +10,7 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const res = await fetch('/api/products')
+    const res = await fetch('http://localhost:3000/api/products')
     products.value = await res.json()
   } catch (e) {
     console.error('Failed to fetch products:', e)
@@ -19,16 +19,8 @@ onMounted(async () => {
   }
 })
 
-async function addToCart(product) {
-  try {
-    await fetch('/api/cart/items', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ product_id: product.id, quantity: 1 }),
-    })
-  } catch (e) {
-    console.error('Failed to add to cart:', e)
-  }
+function formatPrice(price) {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price)
 }
 </script>
 
@@ -36,10 +28,20 @@ async function addToCart(product) {
   <h1>Products</h1>
 
   <DataTable :value="products" :loading="loading" stripedRows tableStyle="min-width: 50rem">
+    <Column header="Image">
+      <template #body="{ data }">
+        <img :src="data.image_url" :alt="data.product_name" class="product-image" />
+      </template>
+    </Column>
     <Column field="product_name" header="Name" sortable />
     <Column field="product_type" header="Type" sortable>
       <template #body="{ data }">
         <Tag :value="data.product_type" />
+      </template>
+    </Column>
+    <Column field="price" header="Price" sortable>
+      <template #body="{ data }">
+        {{ formatPrice(data.price) }}
       </template>
     </Column>
     <Column field="count" header="In Stock" sortable />
@@ -50,7 +52,6 @@ async function addToCart(product) {
           label="Add to Cart"
           size="small"
           :disabled="data.count === 0"
-          @click="addToCart(data)"
         />
       </template>
     </Column>
@@ -60,5 +61,12 @@ async function addToCart(product) {
 <style scoped>
 h1 {
   margin-bottom: 1.5rem;
+}
+
+.product-image {
+  width: 80px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 </style>
