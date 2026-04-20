@@ -1,3 +1,4 @@
 class CartItem < ApplicationRecord
-  # A cart item belongs to a cart and a product
+  belongs_to :cart
+  belongs_to :product
 end
